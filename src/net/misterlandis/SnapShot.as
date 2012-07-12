@@ -12,8 +12,12 @@ package net.misterlandis
 		var bitmap:Bitmap = new Bitmap
 		public function SnapShot(myData:BitmapData) 
 		{
+			trace(height);
 			bitmap.bitmapData = myData;
 			addChild(bitmap);
+			
+			width = 200;
+			scaleY = scaleX;
 		}
 		
 	}

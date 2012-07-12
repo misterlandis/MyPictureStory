@@ -15,9 +15,10 @@ package net.misterlandis
 	public class Main extends Sprite 
 	{
 		var cam:Camera = Camera.getCamera();
-		var video:Video = new Video(320, 240);
-		var videoData:BitmapData = new BitmapData(320,2400);
+		var video:Video = new Video(320,240);
+		var videoData:BitmapData = new BitmapData(320,240);
 		var shutter:Sprite = new Sprite;
+		var snapShotTray:SnapShotTray = new SnapShotTray;
 		
 		public function Main():void 
 		{
@@ -30,11 +31,14 @@ package net.misterlandis
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
+			//set up camera
+			cam.setMode(320, 240,15);
 			video.attachCamera(cam);
 			video.x = 20;
 			video.y = 20;
 			addChild(video);
 			
+			//add the shutter button
 			shutter.graphics.beginFill(0xFF0000);
 			shutter.graphics.drawRect(0, 0, 100, 50);
 			shutter.x = 400;
@@ -42,18 +46,20 @@ package net.misterlandis
 			addChild(shutter);
 			shutter.addEventListener(MouseEvent.CLICK, shutterclick);
 			
+			//add the snapshot tray
+			
+			snapShotTray.y = 300;
+			addChild(snapShotTray);
+			
 			
 		}
 		
 		private function shutterclick(e:Event):void
 		{
+			videoData = new BitmapData(320, 240);
 			videoData.draw(video);
 			var newSnapshot = new SnapShot(videoData);
-			newSnapshot.x = 0;
-			newSnapshot.y = 300;
-			addChild(newSnapshot);
-			
-			
+			snapShotTray.addSnapshot(newSnapshot);
 		}
 		
 	}
