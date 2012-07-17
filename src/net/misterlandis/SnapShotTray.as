@@ -28,13 +28,9 @@ package net.misterlandis
 		public function SnapShotTray() 
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE,drawElements)
-			
-			
-			
-			
 		}
 		
-		public function addSnapshot(newSnapshot:SnapShot)
+		public function addSnapshot(newSnapshot:SnapShot):void
 		{
 			
 			newSnapshot.width = snapshotWidth;
@@ -50,7 +46,7 @@ package net.misterlandis
 		{
 			//add scroll track
 			scrollTrack.graphics.beginFill(0x8888FF);
-			scrollTrack.graphics.drawRect(0, 6, stage.stageWidth, 10);
+			scrollTrack.graphics.drawRect(0, 67, stage.stageWidth, 10);
 			addChild(scrollTrack);
 			
 			//add scroll area
@@ -67,12 +63,13 @@ package net.misterlandis
 			scrollButtonLeft.addChild(new scrollIcon);
 			scrollButtonLeft.scaleX = -1;
 			scrollButtonLeft.x = scrollButtonLeft.width;
-			scrollButtonLeft.addEventListener(MouseEvent.CLICK, scrollLeft);
+			scrollButtonLeft.addEventListener(MouseEvent.MOUSE_DOWN, startScrollLeft);
 			addChild(scrollButtonLeft);
 			
 			//add right scroll button
 			scrollButtonRight.addChild(new scrollIcon);
 			scrollButtonRight.x =(stage.stageWidth - scrollButtonRight.width);
+			scrollButtonRight.addEventListener(MouseEvent.MOUSE_DOWN, startScrollRight);
 			addChild(scrollButtonRight);
 			
 			trace (stage.stageWidth);
@@ -82,9 +79,33 @@ package net.misterlandis
 		
 		private function constrainY(e:Event):void { scrollThumb.y = 64; }
 		
+		private function startScrollLeft(e:Event):void
+		{
+			stage.addEventListener(MouseEvent.MOUSE_UP, stopScroll);
+			stage.addEventListener(Event.ENTER_FRAME, scrollLeft);
+		}
+		
+		private function startScrollRight(e:Event):void
+		{
+			stage.addEventListener(MouseEvent.MOUSE_UP, stopScroll);
+			stage.addEventListener(Event.ENTER_FRAME, scrollRight);
+		}
+		
+		private function stopScroll(e:Event):void
+		{
+			stage.removeEventListener(MouseEvent.MOUSE_UP, stopScroll);
+			stage.removeEventListener(Event.ENTER_FRAME, scrollLeft);
+			stage.removeEventListener(Event.ENTER_FRAME, scrollRight);
+		}
+		
 		private function scrollLeft(e:Event):void
 		{
-			scrollArea.x --;
+			scrollThumb.set_x(scrollThumb.x - 5);
+		}
+		
+		private function scrollRight(e:Event):void
+		{
+			scrollThumb.set_x(scrollThumb.x + 5);
 		}
 	}
 

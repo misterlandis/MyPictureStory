@@ -14,11 +14,11 @@ package net.misterlandis
 	 */
 	public class Main extends Sprite 
 	{
-		var cam:Camera = Camera.getCamera();
-		var video:Video = new Video(320,240);
-		var videoData:BitmapData = new BitmapData(320,240);
-		var shutter:Sprite = new Sprite;
-		var snapShotTray:SnapShotTray = new SnapShotTray;
+		private var cam:Camera = Camera.getCamera();
+		private var video:Video = new Video(320,240);
+		private var videoData:BitmapData = new BitmapData(320,240);
+		private var shutter:Sprite = new Sprite;
+		private var snapShotTray:SnapShotTray = new SnapShotTray;
 		
 		public function Main():void 
 		{
@@ -58,7 +58,7 @@ package net.misterlandis
 		{
 			videoData = new BitmapData(320, 240);
 			videoData.draw(video);
-			var newSnapshot = new SnapShot(videoData);
+			var newSnapshot:SnapShot = new SnapShot(videoData);
 			snapShotTray.addSnapshot(newSnapshot);
 		}
 		

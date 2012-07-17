@@ -10,12 +10,12 @@ package net.misterlandis
 	 */
 	public class ScrollThumb extends Sprite
 	{
-		var xOffset: Number;
-		var leftLimit: Number;
-		var rightLimit: Number;
-		var pixelrange: Number;
+		private var xOffset: Number;
+		private var leftLimit: Number;
+		private var rightLimit: Number;
+		private var pixelrange: Number;
 		public var position:Number;
-		var scrollArea:Sprite;
+		private var scrollArea:Sprite;
 		
 		public function ScrollThumb(track:Sprite,assignedScrollArea:Sprite) 
 		{
@@ -39,12 +39,17 @@ package net.misterlandis
 		
 		private function stage_onMouseMove(e:MouseEvent):void
 		{
-			x = stage.mouseX - xOffset;
+			set_x(stage.mouseX - xOffset);
+			e.updateAfterEvent();
+		}
+		
+		public function set_x(new_x:Number):void
+		{
+			x = new_x;
 			if (x < leftLimit) { x = leftLimit; }
 			if (x > rightLimit) { x = rightLimit; }
 			position = ((1 / pixelrange) * x);
 			scrollArea.x = position * scrollArea.width * -1;
-			e.updateAfterEvent();
 		}
 		
 		private function stage_onMouseUp(e:MouseEvent):void
